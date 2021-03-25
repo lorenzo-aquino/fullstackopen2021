@@ -1,0 +1,14 @@
+title FSO 0.5 Single Page Application Access
+
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa
+server->browser: 200 HTML code
+note left of browser: HTML is parsed, and the stylesheet link is seen
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: 200 CSS code
+note left of browser: Continuing the parsing, the script component is seen
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+server->browser: 200 JS code
+note left of browser: The JS contains a request to the data.json file
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: 200 JSON file
+note left of browser: The resulting HTML is displayed in the page

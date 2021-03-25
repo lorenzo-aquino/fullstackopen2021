@@ -1,0 +1,18 @@
+title FSO 0.4 Traditional: Note Creation
+
+note left of browser: User saves a note
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note
+note right of server: Server processes the request and adds the note to the notes array
+server->browser: 302 URL Redirect to /notes
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/notes
+server->browser: 200 HTML code
+note left of browser: HTML is parsed, and the stylesheet link is seen
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.css
+server->browser: 200 CSS code
+note left of browser: Continuing the parsing, the script component is seen
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/main.js
+server->browser: 200 JS code
+note left of browser: The JS contains a request to the data.json file
+browser->server: HTTP GET https://studies.cs.helsinki.fi/exampleapp/data.json
+server->browser: 200 JSON file
+note left of browser: The updated notes are displayed on the page

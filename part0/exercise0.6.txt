@@ -1,0 +1,6 @@
+title FSO 0.6 Single Page Application Note Creation
+
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+note right of server: note is created
+server->browser: 201 note created
+note left of browser: 'note created' message is logged to the console after creation
