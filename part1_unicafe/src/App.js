@@ -2,25 +2,23 @@ import React, { useState } from 'react'
 
 const Header = ({text}) => <h1>{text}</h1>
 const Button = ({handleClick, text}) => <button onClick={handleClick} >{text}</button>
-const Statistic = ({text, value}) => <p>{text} {value}</p>
+const Statistic = ({text, value}) => <tr><td>{text}</td><td>{value}</td></tr>
 
 const Statistics = ({stats}) => {
   if  (stats.good + stats.neutral + stats.bad === 0) {
-    return (
-      <div>
-        <p>No feedback given</p>
-      </div>
-    )
+    return <p>No feedback given</p>
   } else {
     return (
-      <div>
-        <Statistic text="good" value={stats.good}/>
-        <Statistic text="neutral" value={stats.neutral}/>
-        <Statistic text="bad" value={stats.bad}/>
-        <Statistic text="all" value={stats.all}/>
-        <Statistic text="average" value={stats.average}/>
-        <Statistic text="positive" value={stats.positive}/>
-      </div>
+      <table>
+        <tbody>
+          <Statistic text="good" value={stats.good}/>
+          <Statistic text="neutral" value={stats.neutral}/>
+          <Statistic text="bad" value={stats.bad}/>
+          <Statistic text="all" value={stats.all}/>
+          <Statistic text="average" value={stats.average}/>
+          <Statistic text="positive" value={stats.positive}/>
+        </tbody>
+      </table>
     )
   }
 }
