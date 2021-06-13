@@ -4,16 +4,26 @@ const Header = ({text}) => <h1>{text}</h1>
 const Button = ({handleClick, text}) => <button onClick={handleClick} >{text}</button>
 const Statistic = ({text, count}) => <p>{text} {count}</p>
 
-const Statistics = ({stats}) => (
-  <div>
-    <Statistic text="good" count={stats.good}/>
-    <Statistic text="neutral" count={stats.neutral}/>
-    <Statistic text="bad" count={stats.bad}/>
-    <Statistic text="all" count={stats.all}/>
-    <Statistic text="average" count={stats.average}/>
-    <Statistic text="positive" count={stats.positive}/>
-  </div>
-)
+const Statistics = ({stats}) => {
+  if  (stats.good + stats.neutral + stats.bad === 0) {
+    return (
+      <div>
+        <p>No feedback given</p>
+      </div>
+    )
+  } else {
+    return (
+      <div>
+        <Statistic text="good" count={stats.good}/>
+        <Statistic text="neutral" count={stats.neutral}/>
+        <Statistic text="bad" count={stats.bad}/>
+        <Statistic text="all" count={stats.all}/>
+        <Statistic text="average" count={stats.average}/>
+        <Statistic text="positive" count={stats.positive}/>
+      </div>
+    )
+  }
+}
 
 const App = () => {
   // save clicks of each button to its own state
