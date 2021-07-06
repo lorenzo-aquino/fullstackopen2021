@@ -1,8 +1,8 @@
 import React from "react";
 import Country from "./Country";
+import Weather from "./Weather";
 
-const Result = ({ results, handleClick }) => {
-  console.log("Result", results, results.length);
+const Result = ({ results, handleClick, weather }) => {
   return results.length > 10 ? (
     <div>Too many matches, specify another filter</div>
   ) : results.length !== 1 ? (
@@ -19,6 +19,7 @@ const Result = ({ results, handleClick }) => {
   ) : (
     <>
       <Country country={results[0]} />
+      <Weather weather={weather} />
     </>
   );
 };
