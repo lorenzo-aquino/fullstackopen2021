@@ -18,12 +18,18 @@ const App = () => {
         setResults(response.data);
       });
   };
+
+  const showCountry = (event) => {
+    const country = event.target.id;
+    const countryResult = [results[country]];
+    setResults(countryResult);
+  };
   return (
     <>
       <div>
         find countries <input onChange={findCountries} />
       </div>
-      <Result results={results} />
+      <Result results={results} handleClick={showCountry} />
     </>
   );
 };

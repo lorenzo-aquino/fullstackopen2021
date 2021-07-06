@@ -9,7 +9,7 @@ const Country = ({ country }) => {
       <h3>languages</h3>
       <ol>
         {country.languages.map((language) => (
-          <li id={language.iso639_1}>{language.name}</li>
+          <li key={language.iso639_1}>{language.name}</li>
         ))}
       </ol>
       <img width="150" src={country.flag} alt="country flag" />
