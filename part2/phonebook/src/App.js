@@ -6,7 +6,10 @@ import PersonForm from "./components/PersonForm";
 
 const App = () => {
   useEffect(() => {
-    refreshPersonsOnUI();
+    personService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
+      setFilteredPersons(initialPersons);
+    });
   }, []);
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
@@ -37,7 +40,28 @@ const App = () => {
         );
       });
     } else {
-      alert(`${newName} is already added to phonebook`);
+      if (
+        window.confirm(
+          `${newName} is already added to the phonebook, replace the old number with a new one?`
+        )
+      ) {
+        const updatedPerson = { name: newName, number: newNumber };
+        const currentPerson = persons.find((person) => person.name === newName);
+
+        personService
+          .updatePerson(currentPerson.id, updatedPerson)
+          .then((updatedPerson) => {
+            const currentPersons = [...persons].map((person) =>
+              person.id !== currentPerson.id ? person : updatedPerson
+            );
+            setPersons(currentPersons);
+            setFilteredPersons(
+              currentPersons.filter((person) =>
+                filter ? person.name.toUpperCase().indexOf(filter) > -1 : true
+              )
+            );
+          });
+      }
     }
     clearInput("newName");
     clearInput("newNumber");
@@ -52,16 +76,19 @@ const App = () => {
       window.confirm(`Are you sure you want to delete ${personForDeletion}`)
     ) {
       personService.deletePerson(event.target.id).then(() => {
-        refreshPersonsOnUI();
+        console.log(event.target.id);
+        const currentPersons = [...persons].filter(
+          (person) => person.id != event.target.id
+        );
+        console.log(currentPersons);
+        setPersons(currentPersons);
+        setFilteredPersons(
+          currentPersons.filter((person) =>
+            filter ? person.name.toUpperCase().indexOf(filter) > -1 : true
+          )
+        );
       });
     }
-  };
-
-  const refreshPersonsOnUI = () => {
-    personService.getAll().then((initialPersons) => {
-      setPersons(initialPersons);
-      setFilteredPersons(initialPersons);
-    });
   };
 
   const handleNewNameChange = (event) => {
