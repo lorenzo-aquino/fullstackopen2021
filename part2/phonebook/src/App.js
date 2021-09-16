@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import personService from "./services/person";
 import Filter from "./components/Filter";
 import Persons from "./components/Persons";
 import PersonForm from "./components/PersonForm";
 
 const App = () => {
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
-      setPersons(response.data);
-      setFilteredPersons(response.data);
+    personService.getAll().then((initialPersons) => {
+      setPersons(initialPersons);
+      setFilteredPersons(initialPersons);
     });
   }, []);
   const [persons, setPersons] = useState([]);
@@ -28,13 +28,17 @@ const App = () => {
   const addPersonToPhonebook = (event) => {
     event.preventDefault();
     if (!personExists(newName)) {
-      const currentPersons = [...persons, { name: newName, number: newNumber }];
-      setPersons(currentPersons);
-      setFilteredPersons(
-        currentPersons.filter((person) =>
-          filter ? person.name.toUpperCase().indexOf(filter) > -1 : true
-        )
-      );
+      const newPerson = { name: newName, number: newNumber };
+
+      personService.create(newPerson).then((createdPerson) => {
+        const currentPersons = [...persons, createdPerson];
+        setPersons(currentPersons);
+        setFilteredPersons(
+          currentPersons.filter((person) =>
+            filter ? person.name.toUpperCase().indexOf(filter) > -1 : true
+          )
+        );
+      });
     } else {
       alert(`${newName} is already added to phonebook`);
     }
