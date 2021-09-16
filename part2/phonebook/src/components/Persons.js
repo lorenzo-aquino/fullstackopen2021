@@ -1,13 +1,16 @@
-import React from 'react'
-  
-const listPhonebookEntry = (person) => (
-  <li key={person.name}>{person.name} {person.number}</li>
-)
+import React from "react";
 
-const Persons = ({persons}) => (
-  <ul>
-    {persons.map( person => listPhonebookEntry(person))}
-  </ul>
-)
+const listPhonebookEntry = (person, handleDelete) => (
+  <li key={person.name}>
+    {person.name} {person.number}
+    <button id={person.id} name={person.name} onClick={handleDelete}>
+      delete
+    </button>
+  </li>
+);
 
-export default Persons
+const Persons = ({ persons, handleDelete }) => (
+  <ul>{persons.map((person) => listPhonebookEntry(person, handleDelete))}</ul>
+);
+
+export default Persons;
